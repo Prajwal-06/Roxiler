@@ -26,8 +26,6 @@ async function fetchData(page) {
         let transactions = data.slice(start , end)
         setPageData(transactions);
         setLoading(false);
-        console.log(pageData)
-        console.log(data);
     } catch (error) {
        console.log("Error occurs while fetching API")
        setPage(1);

@@ -28,11 +28,11 @@ app.get('/' , async (req , res)=>{
 function getDataByMonth(data, month) {
     return data.filter(item => {
         const date = new Date(item.dateOfSale);
-        return date.getMonth() + 1 === month; // Month is 0-indexed, so +1 to match the input
+        return date.getMonth() + 1 === month;
     });
 }
 
-// API to get statistics for a specific month (ignoring year)
+
 app.get('/api/statistics/:month', async (req, res) => {
     const { month } = req.params;
     const numericMonth = parseInt(month);
@@ -44,7 +44,7 @@ app.get('/api/statistics/:month', async (req, res) => {
     const totalSoldItems = filteredData.filter(item => item.sold).length;
     const totalNotSoldItems = filteredData.filter(item => !item.sold).length;
 
-    // Send the response with the statistics
+   
     res.json({
         totalSale,
         totalSoldItems,
@@ -57,12 +57,12 @@ app.get('/api/price-range/:month', async (req, res) => {
     const { month } = req.params;
 
     try {
-        const monthNumber = parseInt(month); // Ensure the month is a number
+        const monthNumber = parseInt(month);
 
         const allListings = await Listing.find({});
-        const filteredData = getDataByMonth(allListings, monthNumber); // Filter data by month
+        const filteredData = getDataByMonth(allListings, monthNumber); 
 
-        // Initialize price range counts
+      
         const priceRanges = {
             "0-100": 0,
             "101-200": 0,
@@ -76,7 +76,7 @@ app.get('/api/price-range/:month', async (req, res) => {
             "901-above": 0
         };
 
-        // Categorize the items based on their price into the specified ranges
+        
         filteredData.forEach(item => {
             const price = item.price;
             if (price >= 0 && price <= 100) priceRanges["0-100"]++;
@@ -100,7 +100,7 @@ app.get('/api/price-range/:month', async (req, res) => {
 
 app.get('/api/category-count/:month', async (req, res) => {
     const { month } = req.params;
-    const numericMonth = parseInt(month); // Convert month to a number
+    const numericMonth = parseInt(month); 
 
     try {
         const allListings = await Listing.find({});
@@ -114,13 +114,12 @@ app.get('/api/category-count/:month', async (req, res) => {
         const categoryCounts = {};
 
         filteredListings.forEach(item => {
-            const category = item.category; // Assuming 'category' is the field name
+            const category = item.category; 
             if (category) {
                 categoryCounts[category] = (categoryCounts[category] || 0) + 1;
             }
         });
 
-        // Send the response with the category counts
         res.json(categoryCounts);
     } catch (error) {
         console.error("Error fetching category count:", error);

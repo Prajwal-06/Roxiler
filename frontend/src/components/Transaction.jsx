@@ -13,7 +13,6 @@ const Transaction = () => {
         const searchData = await allData.filter((item)=>{
             return item.title.toLowerCase().includes(input.toLowerCase())
         })
-        console.log(searchData)
         setPageData(searchData)
     }
 
