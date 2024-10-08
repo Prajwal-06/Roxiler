@@ -21,6 +21,13 @@ npm install
 Seed data to your Database
 
 But makesure you need to give your mongo server url
+```bash
+Create database in mongo
+```
+In .env
+```bash
+Replace my .env Mongo url with yours with database name
+```
 
 Create Database named "Roxiler"
 
